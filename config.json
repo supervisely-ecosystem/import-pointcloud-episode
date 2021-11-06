@@ -1,0 +1,19 @@
+{
+  "name": "Import pointcloud episode",
+  "type": "app",
+  "categories": [
+    "import",
+    "pointcloud"
+  ],
+  "description": "With annotations and photo context",
+  "docker_image": "supervisely/base-py-sdk:latest",
+  "main_script": "src/main.py",
+  "task_location": "workspace_tasks",
+  "isolate": true,
+  "headless": true,
+  "icon": "https://i.imgur.com/1hqGMyg.png",
+  "icon_background": "#FFFFFF",
+  "context_menu": {
+    "target": ["files_folder", "files_file"]
+  }
+}

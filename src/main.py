@@ -1,17 +1,16 @@
 import os
-import sys
-from pathlib import Path
 import tarfile
-
-sys.path.append('/sly')
+from pathlib import Path
 
 import supervisely_lib as sly
 from supervisely_lib.api.module_api import ApiField
-from supervisely_lib.video_annotation.key_id_map import KeyIdMap
-from supervisely_lib.project.pointcloud_episode_project import PointcloudEpisodeProject
 from supervisely_lib.api.pointcloud.pointcloud_episode_annotation_api import PointcloudEpisodeAnnotationAPI
+from supervisely_lib.api.pointcloud.pointcloud_episode_figure_api import PointcloudEpisodeFigureAPI
+from supervisely_lib.api.pointcloud.pointcloud_episode_object_api import PointcloudEpisodeObjectAPI
 from supervisely_lib.pointcloud_annotation.pointcloud_episode_annotation import PointcloudEpisodeAnnotation
+from supervisely_lib.project.pointcloud_episode_project import PointcloudEpisodeProject
 from supervisely_lib.project.project_type import ProjectType
+from supervisely_lib.video_annotation.key_id_map import KeyIdMap
 
 my_app = sly.AppService()
 
@@ -24,34 +23,41 @@ assert INPUT_DIR or INPUT_FILE
 
 def upload_related_items(api, related_items, pointcloud_id):
     if len(related_items) != 0:
-        rimg_infos = []
+        img_infos = []
         for img_path, meta_json in related_items:
-            img_name = sly.fs.get_file_name(img_path)
             img = api.pointcloud.upload_related_image(img_path)[0]
-            rimg_infos.append({ApiField.ENTITY_ID: pointcloud_id,
+            img_infos.append({ApiField.ENTITY_ID: pointcloud_id,
                                ApiField.NAME: meta_json[ApiField.NAME],
                                ApiField.HASH: img,
                                ApiField.META: meta_json[ApiField.META]})
 
-        api.pointcloud.add_related_images(rimg_infos)
+        api.pointcloud.add_related_images(img_infos)
 
 
 def process_episode_project(input_dir, project, api, app_logger):
-
     project_fs = PointcloudEpisodeProject.read_single(input_dir)
 
     api.project.update_meta(project.id, project_fs.meta.to_json())
     app_logger.info("Project {!r} [id={!r}] has been created".format(project.name, project.id))
 
-    uploaded_objects = KeyIdMap()
     episode_annotation_api = PointcloudEpisodeAnnotationAPI(api)
+    object_api = PointcloudEpisodeObjectAPI(api)
+    figure_api = PointcloudEpisodeFigureAPI(api)
 
+    uploaded_objects = KeyIdMap()
     for dataset_fs in project_fs:
-        dataset = api.dataset.create(project.id, dataset_fs.name, change_name_if_conflict=True)
+        ann_json = sly.io.json.load_json_file(dataset_fs.get_ann_path())
+        episode_annotation = PointcloudEpisodeAnnotation.from_json(ann_json, project_fs.meta)
+
+        dataset = api.dataset.create(project.id,
+                                     dataset_fs.name,
+                                     description=episode_annotation.description,
+                                     change_name_if_conflict=True)
         app_logger.info("dataset {!r} [id={!r}] has been created".format(dataset.name, dataset.id))
 
-        item_pc_id = {}
+        frame_to_pointcloud_ids = {}
         for item_name in dataset_fs:
+            app_logger.info(f'Upload {item_name}')
             item_path, related_images_dir = dataset_fs.get_item_paths(item_name)
             related_items = dataset_fs.get_related_images(item_name)
 
@@ -62,19 +68,14 @@ def process_episode_project(input_dir, project, api, app_logger):
             except (KeyError, IndexError):
                 item_meta = {}
 
-            pointcloud = api.pointcloud.upload_path(dataset.id, item_name, item_path, item_meta) # upload pointcloud
+            pointcloud = api.pointcloud.upload_path(dataset.id, item_name, item_path, item_meta)  # upload pointcloud
             upload_related_items(api, related_items, pointcloud.id)  # upload related_images if exist
-            item_pc_id[item_name] = pointcloud.id
 
-        ann_json = sly.io.json.load_json_file(dataset_fs.get_ann_path())
-        episode_annotation = PointcloudEpisodeAnnotation.from_json(ann_json, project_fs.meta)
-
-        for item_name in dataset_fs:
-            pc_id = item_pc_id[item_name]
             frame_idx = dataset_fs.get_frame_idx(item_name)
-            # TODO: it works through old per pc_id annotation upload. Should be a method like "set_annotation"
-            single_ann = episode_annotation.get_single_annotation(frame_idx)
-            episode_annotation_api.append(project.id, dataset.id, pc_id, single_ann, uploaded_objects)
+            frame_to_pointcloud_ids[frame_idx] = pointcloud.id
+
+        episode_annotation_api.append(object_api, figure_api, dataset.id, episode_annotation, frame_to_pointcloud_ids,
+                                      uploaded_objects)
 
     app_logger.info('PROJECT_UPLOADED', extra={'event_type': sly.EventType.PROJECT_CREATED, 'project_id': project.id})
 
@@ -104,7 +105,7 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
     app_logger.info(f'{cur_files_path} downloaded to {archive_path}')
     if tarfile.is_tarfile(archive_path):
         with tarfile.open(archive_path) as archive:
-             archive.extractall(extract_dir)
+            archive.extractall(extract_dir)
     else:
         raise Exception("No such file".format(INPUT_FILE))
 

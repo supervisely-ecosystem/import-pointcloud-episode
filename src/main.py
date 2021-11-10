@@ -5,8 +5,6 @@ from pathlib import Path
 import supervisely_lib as sly
 from supervisely_lib.api.module_api import ApiField
 from supervisely_lib.api.pointcloud.pointcloud_episode_annotation_api import PointcloudEpisodeAnnotationAPI
-from supervisely_lib.api.pointcloud.pointcloud_episode_figure_api import PointcloudEpisodeFigureAPI
-from supervisely_lib.api.pointcloud.pointcloud_episode_object_api import PointcloudEpisodeObjectAPI
 from supervisely_lib.pointcloud_annotation.pointcloud_episode_annotation import PointcloudEpisodeAnnotation
 from supervisely_lib.project.pointcloud_episode_project import PointcloudEpisodeProject
 from supervisely_lib.project.project_type import ProjectType
@@ -41,8 +39,6 @@ def process_episode_project(input_dir, project, api, app_logger):
     app_logger.info("Project {!r} [id={!r}] has been created".format(project.name, project.id))
 
     episode_annotation_api = PointcloudEpisodeAnnotationAPI(api)
-    object_api = PointcloudEpisodeObjectAPI(api)
-    figure_api = PointcloudEpisodeFigureAPI(api)
 
     uploaded_objects = KeyIdMap()
     for dataset_fs in project_fs:
@@ -74,8 +70,7 @@ def process_episode_project(input_dir, project, api, app_logger):
             frame_idx = dataset_fs.get_frame_idx(item_name)
             frame_to_pointcloud_ids[frame_idx] = pointcloud.id
 
-        episode_annotation_api.append(object_api, figure_api, dataset.id, episode_annotation, frame_to_pointcloud_ids,
-                                      uploaded_objects)
+        episode_annotation_api.append(dataset.id, episode_annotation, frame_to_pointcloud_ids, uploaded_objects)
 
     app_logger.info('PROJECT_UPLOADED', extra={'event_type': sly.EventType.PROJECT_CREATED, 'project_id': project.id})
 

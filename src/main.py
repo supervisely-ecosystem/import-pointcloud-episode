@@ -54,17 +54,19 @@ def process_episode_project(input_dir, project, api, app_logger):
             item_path, related_images_dir = dataset_fs.get_item_paths(item_name)
             related_items = dataset_fs.get_related_images(item_name)
 
+            item_meta = {}
             try:
                 _, meta = related_items[0]
                 timestamp = meta[ApiField.META]['timestamp']
-                item_meta = {"timestamp": timestamp}
+                item_meta["timestamp"] = timestamp
             except (KeyError, IndexError):
-                item_meta = {}
+                pass
+
+            frame_idx = dataset_fs.get_frame_idx(item_name)
+            item_meta["frame"] = frame_idx
 
             pointcloud = api.pointcloud_episode.upload_path(dataset.id, item_name, item_path, item_meta)  # upload pointcloud
             upload_related_items(api, related_items, pointcloud.id)  # upload related_images if exist
-
-            frame_idx = dataset_fs.get_frame_idx(item_name)
             frame_to_pointcloud_ids[frame_idx] = pointcloud.id
 
         api.pointcloud_episode.annotation.append(dataset.id, episode_annotation, frame_to_pointcloud_ids, uploaded_objects)

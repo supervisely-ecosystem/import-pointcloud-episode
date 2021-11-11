@@ -23,7 +23,9 @@
 
 ## Overview
 
-Import Supervisely pointcloud episodes format project from Team Files folder or archive. You can learn more about format and its sctructure by reading [documentation](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode)
+Import Supervisely pointcloud episodes format project from Team Files folder or archive. You can learn more about format and its structure by reading [documentation](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
+
+Backward compatible with [`Export pointcloud episodes`](https://ecosystem.supervise.ly/apps/export-pointcloud-episode) app
 
 # How To Run 
 

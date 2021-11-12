@@ -1,5 +1,5 @@
 <div align="center" markdown>
-
+<img src="https://i.imgur.com/V9VlxSb.png">
 
 # Import Supervisely pointcloud episodes
 

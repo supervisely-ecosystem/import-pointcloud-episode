@@ -1,11 +1,11 @@
 <div align="center" markdown>
-<img src=""/>
 
 
 # Import Supervisely pointcloud episodes
 
 <p align="center">
   <a href="#Overview">Overview</a> •
+  <a href="#Preparation">Preparation</a> •
   <a href="#How-To-Run">How To Run</a> •
   <a href="#How-To-Use">How To Use</a>
 </p>
@@ -23,9 +23,14 @@
 
 ## Overview
 
-Import Supervisely pointcloud episodes format project from Team Files folder or archive(`.tar` or `.zip`). You can learn more about format and its structure by reading [documentation](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
+Import Supervisely pointcloud episodes format project from Team Files folder or archive. You can learn more about format and its structure by reading [documentation](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
 
 Backward compatible with [`Export pointcloud episodes`](https://ecosystem.supervise.ly/apps/export-pointcloud-episode) app
+
+
+# Preparation
+
+Upload your data in Supervisely pointcloud episodes [format](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode) to Team Files. It is possible to upload folder or archive (`.tar` or `.zip`).
 
 Imported project structure has to be the following:
 ```text
@@ -76,13 +81,14 @@ pcd_episodes_project folder or .tar/.zip archive
 
 1. Add [Import Supervisely pointcloud episodes](https://ecosystem.supervise.ly/apps/import-pointcloud-episode) to your team from Ecosystem.
 
-<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/import-pointcloud-episode" src="" width="450px" style='padding-bottom: 20px'/>  
+<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/import-pointcloud-episode" src="https://i.imgur.com/PKBKREP.png" width="450px" style='padding-bottom: 20px'/>  
 
 2. Run app from the context menu of directory or archive in **Team Files** -> `Run app` -> `Import pointcloud episodes`
 
+<img src="https://i.imgur.com/uygyjt3.png"/>
 
 # How To Use 
 
 1. Wait for the app to import your data (project will be created in the current workspace)
 
-<img src="" width=""/>  
+<img src="https://i.imgur.com/y8XZEJ6.png"/>  

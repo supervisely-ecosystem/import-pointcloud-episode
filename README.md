@@ -39,16 +39,16 @@ pcd_episodes_project folder or .tar/.zip archive
 │ │ └── ...                
 │ └── related_images                
 │     ├── scene_1_pcd               
-│     │ ├── scene_1_cam0.jpeg       
-│     │ ├── scene_1_cam0.jpeg.json  
-│     │ ├── scene_1_cam1.jpeg       
-│     │ ├── scene_1_cam1.jpeg.json  
+│     │ ├── scene_1_cam0.png       
+│     │ ├── scene_1_cam0.png.json  
+│     │ ├── scene_1_cam1.png       
+│     │ ├── scene_1_cam1.png.json  
 │     │ └── ... 
 │     ├── scene_2_pcd               
-│     │ ├── scene_2_cam0.jpeg       
-│     │ ├── scene_2_cam0.jpeg.json  
-│     │ ├── scene_2_cam1.jpeg       
-│     │ ├── scene_2_cam1.jpeg.json  
+│     │ ├── scene_2_cam0.png       
+│     │ ├── scene_2_cam0.png.json  
+│     │ ├── scene_2_cam1.png       
+│     │ ├── scene_2_cam1.png.json  
 │     │ └── ... 
 │     └── ...      
 ├── dataset2                        
@@ -59,12 +59,12 @@ pcd_episodes_project folder or .tar/.zip archive
 │ │ └── ...               
 │ └── related_images                
 │     ├── scene_1_pcd               
-│     │ ├── scene_1_cam0.jpeg       
-│     │ ├── scene_1_cam0.jpeg.json    
+│     │ ├── scene_1_cam0.png       
+│     │ ├── scene_1_cam0.png.json    
 │     │ └── ... 
 │     ├── scene_2_pcd               
-│     │ ├── scene_2_cam0.jpeg       
-│     │ ├── scene_2_cam0.jpeg.json  
+│     │ ├── scene_2_cam0.png       
+│     │ ├── scene_2_cam0.png.json  
 │     │ └── ... 
 │     └── ...     
 ├── key_id_map.json                 

@@ -34,76 +34,39 @@ pcd_episodes_project folder or .tar/.zip archive
 │ ├── annotation.json               
 │ ├── frame_pointcloud_map.json     
 │ ├── pointcloud                    
-│ │ ├── scene_1.pcd                 
-│ │ └── scene_2.pcd                 
+│ │ ├── scene_1.pcd           
+│ │ ├── scene_2.pcd   
+│ │ └── ...                
 │ └── related_images                
 │     ├── scene_1_pcd               
 │     │ ├── scene_1_cam0.jpeg       
 │     │ ├── scene_1_cam0.jpeg.json  
 │     │ ├── scene_1_cam1.jpeg       
 │     │ ├── scene_1_cam1.jpeg.json  
-│     │ ├── scene_1_cam2.jpeg       
-│     │ ├── scene_1_cam2.jpeg.json  
-│     │ ├── scene_1_cam3.jpeg       
-│     │ ├── scene_1_cam3.jpeg.json  
-│     │ ├── scene_1_cam4.jpeg       
-│     │ ├── scene_1_cam4.jpeg.json  
-│     │ ├── scene_1_cam5.jpeg       
-│     │ ├── scene_1_cam5.jpeg.json  
-│     │ ├── scene_1_cam6.jpeg       
-│     │ └── scene_1_cam6.jpeg.json  
-│     └── scene_2_pcd               
-│         ├── scene_2_cam0.jpeg     
-│         ├── scene_2_cam0.jpeg.json
-│         ├── scene_2_cam1.jpeg     
-│         ├── scene_2_cam1.jpeg.json
-│         ├── scene_2_cam2.jpeg     
-│         ├── scene_2_cam2.jpeg.json
-│         ├── scene_2_cam3.jpeg     
-│         ├── scene_2_cam3.jpeg.json
-│         ├── scene_2_cam4.jpeg     
-│         ├── scene_2_cam4.jpeg.json
-│         ├── scene_2_cam5.jpeg     
-│         ├── scene_2_cam5.jpeg.json
-│         ├── scene_2_cam6.jpeg     
-│         └── scene_2_cam6.jpeg.json
+│     │ └── ... 
+│     ├── scene_2_pcd               
+│     │ ├── scene_2_cam0.jpeg       
+│     │ ├── scene_2_cam0.jpeg.json  
+│     │ ├── scene_2_cam1.jpeg       
+│     │ ├── scene_2_cam1.jpeg.json  
+│     │ └── ... 
+│     └── ...      
 ├── dataset2                        
 │ ├── annotation.json               
 │ ├── frame_pointcloud_map.json     
 │ ├── pointcloud                    
 │ │ ├── scene_1.pcd                 
-│ │ └── scene_2.pcd                 
+│ │ └── ...               
 │ └── related_images                
 │     ├── scene_1_pcd               
 │     │ ├── scene_1_cam0.jpeg       
-│     │ ├── scene_1_cam0.jpeg.json  
-│     │ ├── scene_1_cam1.jpeg       
-│     │ ├── scene_1_cam1.jpeg.json  
-│     │ ├── scene_1_cam2.jpeg       
-│     │ ├── scene_1_cam2.jpeg.json  
-│     │ ├── scene_1_cam3.jpeg       
-│     │ ├── scene_1_cam3.jpeg.json  
-│     │ ├── scene_1_cam4.jpeg       
-│     │ ├── scene_1_cam4.jpeg.json  
-│     │ ├── scene_1_cam5.jpeg       
-│     │ ├── scene_1_cam5.jpeg.json  
-│     │ ├── scene_1_cam6.jpeg       
-│     │ └── scene_1_cam6.jpeg.json  
-│     └── scene_2_pcd               
-│         ├── scene_2_cam0.jpeg     
-│         ├── scene_2_cam0.jpeg.json
-│         ├── scene_2_cam1.jpeg     
-│         ├── scene_2_cam1.jpeg.json
-│         ├── scene_2_cam2.jpeg     
-│         ├── scene_2_cam2.jpeg.json
-│         ├── scene_2_cam3.jpeg     
-│         ├── scene_2_cam3.jpeg.json
-│         ├── scene_2_cam4.jpeg     
-│         ├── scene_2_cam4.jpeg.json
-│         ├── scene_2_cam5.jpeg     
-│         ├── scene_2_cam5.jpeg.json
-│         ├── scene_2_cam6.jpeg     
-│         └── scene_2_cam6.jpeg.json
+│     │ ├── scene_1_cam0.jpeg.json    
+│     │ └── ... 
+│     ├── scene_2_pcd               
+│     │ ├── scene_2_cam0.jpeg       
+│     │ ├── scene_2_cam0.jpeg.json  
+│     │ └── ... 
+│     └── ...     
 ├── key_id_map.json                 
 └── meta.json                       
 ```

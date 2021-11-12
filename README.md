@@ -29,7 +29,9 @@ Backward compatible with [`Export pointcloud episodes`](https://ecosystem.superv
 
 Imported project structure has to be the following:
 ```text
-pcd_episodes_project folder or .tar/.zip archive      
+pcd_episodes_project folder or .tar/.zip archive   
+├── key_id_map.json                 
+├── meta.json     
 ├── dataset1                        
 │ ├── annotation.json               
 │ ├── frame_pointcloud_map.json     
@@ -66,9 +68,8 @@ pcd_episodes_project folder or .tar/.zip archive
 │     │ ├── scene_2_cam0.png       
 │     │ ├── scene_2_cam0.png.json  
 │     │ └── ... 
-│     └── ...     
-├── key_id_map.json                 
-└── meta.json                       
+│     └── ...                    
+└── dataset...                       
 ```
 
 # How To Run 

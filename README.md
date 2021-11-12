@@ -83,7 +83,7 @@ pcd_episodes_project folder or .tar/.zip archive
 
 <img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/import-pointcloud-episode" src="https://i.imgur.com/JRM9WXO.png" width="450px" style='padding-bottom: 20px'/>  
 
-2. Run app from the context menu of directory or archive in **Team Files** -> `Run app` -> `Import pointcloud episodes`
+2. Run app from the context menu of directory or archive in **Team Files** -> `Run app` -> `Import pointcloud episodes in supervisely format`
 
 <img src="https://i.imgur.com/AOhFNgm.png"/>
 

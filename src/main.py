@@ -1,20 +1,16 @@
 import globals as g
 import functions as f
 import supervisely_lib as sly
-from supervisely_lib.project.project_type import ProjectType
+from supervisely_lib.project.pointcloud_episode_project import upload_pointcloud_episode_project
 
 
 @g.my_app.callback("import_pointcloud_episode")
 @sly.timeit
 def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger):
     input_dir, project_name = f.download_input_files(api, task_id, g.INPUT_DIR, g.INPUT_FILE)
-    project = api.project.create(g.WORKSPACE_ID,
-                                 project_name,
-                                 type=ProjectType.POINT_CLOUD_EPISODES,
-                                 change_name_if_conflict=True)
 
-    f.process_episode_project(input_dir, project, api, app_logger)
-    api.task.set_output_project(task_id, project.id, project.name)
+    project_id, project_name = upload_pointcloud_episode_project(input_dir, api, g.WORKSPACE_ID, project_name=project_name, log_progress=True)
+    api.task.set_output_project(task_id, project_id, project_name)
     g.my_app.stop()
 
 

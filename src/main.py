@@ -5,7 +5,7 @@ from supervisely_lib.project.pointcloud_episode_project import upload_pointcloud
 
 
 @g.my_app.callback("import_pointcloud_episode")
-@sly.timeitек
+@sly.timeit
 def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger):
     input_dir, project_name = f.download_input_files(api, task_id, g.INPUT_DIR, g.INPUT_FILE)
 

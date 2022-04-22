@@ -4,7 +4,7 @@ from supervisely_lib.app.v1.app_service import AppService
 
 
 api: sly.Api = sly.Api.from_env()
-my_app: sly.AppService = AppService()
+my_app = AppService()
 
 TASK_ID = int(os.environ["TASK_ID"])
 TEAM_ID = os.environ["context.teamId"]

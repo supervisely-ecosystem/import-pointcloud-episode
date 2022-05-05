@@ -14,6 +14,10 @@
   "icon": "https://i.imgur.com/UGS45Aw.png",
   "icon_background": "#FFFFFF",
   "context_menu": {
-    "target": ["files_folder", "files_file"]
-  }
+    "target": [
+      "files_folder",
+      "files_file"
+    ]
+  },
+  "poster": "https://i.imgur.com/V9VlxSb.png"
 }

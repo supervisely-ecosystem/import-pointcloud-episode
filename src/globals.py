@@ -1,5 +1,5 @@
 import os
-import supervisely_lib as sly
+import supervisely as sly
 from supervisely_lib.app.v1.app_service import AppService
 
 

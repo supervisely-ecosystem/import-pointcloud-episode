@@ -5,7 +5,7 @@ import zipfile
 from pathlib import Path
 
 import download_progress
-import supervisely_lib as sly
+import supervisely as sly
 
 
 def download_input_files(api, task_id, input_dir, input_file):

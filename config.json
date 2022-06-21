@@ -1,5 +1,5 @@
 {
-  "name": "Import Pointcloud Episodes in Supervisely format",
+  "name": "Import Pointcloud Episodes",
   "type": "app",
   "categories": [
     "import",

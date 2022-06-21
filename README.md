@@ -1,7 +1,7 @@
 <div align="center" markdown>
 <img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.0.0/poster.png">
 
-# Import Supervisely Pointcloud Episodes
+# Import Pointcloud Episodes
 
 <p align="center">
   <a href="#Overview">Overview</a> •

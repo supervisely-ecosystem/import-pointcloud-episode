@@ -8,9 +8,19 @@ from supervisely.project.pointcloud_episode_project import upload_pointcloud_epi
 @sly.timeit
 def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger):
     input_dir, project_name = f.download_input_files(api, task_id, g.INPUT_DIR, g.INPUT_FILE)
+    
+    project_name = project_name if len(g.OUTPUT_PROJECT_NAME) == 0 else g.OUTPUT_PROJECT_NAME
 
     project_id, project_name = upload_pointcloud_episode_project(input_dir, api, g.WORKSPACE_ID, project_name=project_name, log_progress=True)
     api.task.set_output_project(task_id, project_id, project_name)
+    
+    if g.REMOVE_SOURCE:
+        api.file.remove(team_id=g.TEAM_ID, path=g.INPUT_DIR)
+        source_dir_name = g.INPUT_DIR.lstrip("/").rstrip("/")
+        sly.logger.info(
+            msg=f"Source directory: '{source_dir_name}' was successfully removed."
+        )
+    
     g.my_app.stop()
 
 

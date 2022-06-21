@@ -10,7 +10,7 @@
     "remove_source": true,
     "project_name": ""
   },
-  "description": "With annotations and photo context",
+  "description": "Import Pointcloud Episodes with Annotations and Photo context",
   "docker_image": "supervisely/base-py-sdk:6.17.4",
   "main_script": "src/main.py",
   "task_location": "workspace_tasks",

@@ -3,6 +3,9 @@ import supervisely as sly
 from supervisely_lib.app.v1.app_service import AppService
 
 
+from distutils.util import strtobool
+
+
 api: sly.Api = sly.Api.from_env()
 my_app = AppService()
 

@@ -1,5 +1,5 @@
 <div align="center" markdown>
-<img src="https://i.imgur.com/V9VlxSb.png">
+<img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.0.0/poster.png">
 
 # Import Supervisely Pointcloud Episodes
 
@@ -23,9 +23,12 @@
 
 ## Overview
 
-Import Supervisely pointcloud episodes format project from Team Files folder or archive. You can learn more about format and its structure by reading [documentation](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
+Import Supervisely pointcloud episodes format project from Team Files folder or archive.  
+You can learn more about format and its structure by reading [documentation](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
 
-Backward compatible with [`Export pointcloud episodes`](https://ecosystem.supervise.ly/apps/export-pointcloud-episode) app
+<img src="https://github.com/supervisely-ecosystem/import-kitti-360/releases/download/v0.0.4/pointcloud-episodes.gif?raw=true" style="width: 100%;"/>
+
+Backward compatible with [`Export Supervisely Pointcloud Episodes`](https://ecosystem.supervise.ly/apps/export-pointcloud-episode) app
 
 
 # Preparation

@@ -13,6 +13,7 @@
   "description": "Import Pointcloud Episodes with Annotations and Photo context",
   "docker_image": "supervisely/base-py-sdk:6.17.4",
   "main_script": "src/main.py",
+  "modal_template": "src/modal.html",
   "task_location": "workspace_tasks",
   "isolate": true,
   "headless": true,

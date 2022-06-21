@@ -8,6 +8,12 @@ import download_progress
 import supervisely as sly
 
 
+def get_project_name_from_input_path(input_path: str) -> str:
+    """Returns project name from target sly folder name."""
+    full_path_dir = os.path.dirname(input_path)
+    return os.path.basename(full_path_dir)
+
+
 def download_input_files(api, task_id, input_dir, input_file):
     if input_dir:
         sizeb = api.file.get_directory_size(g.TEAM_ID, input_dir)

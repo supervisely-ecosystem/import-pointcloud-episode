@@ -37,7 +37,7 @@ Upload your data in Supervisely pointcloud episodes [format](https://docs.superv
 Imported project structure has to be the following:
 ```text
 pcd_episodes_project folder or .tar/.zip archive   
-├── key_id_map.json                 
+├── key_id_map.json (optional)                
 ├── meta.json     
 ├── dataset1                        
 │ ├── annotation.json               

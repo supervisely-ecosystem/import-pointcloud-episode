@@ -2,8 +2,6 @@ import os
 from pathlib import Path
 import supervisely as sly
 from supervisely.app.v1.app_service import AppService
-
-
 from distutils.util import strtobool
 
 app_root_directory = str(Path(__file__).parent.absolute().parents[0])

@@ -10,9 +10,9 @@ app_root_directory = str(Path(__file__).parent.absolute().parents[0])
 sly.logger.info(f"App root directory: {app_root_directory}")
 
 # debug
-from dotenv import load_dotenv
-load_dotenv(os.path.join(app_root_directory, "debug.env"))
-load_dotenv(os.path.join(app_root_directory, "secret_debug.env"))
+# from dotenv import load_dotenv
+# load_dotenv(os.path.join(app_root_directory, "debug.env"))
+# load_dotenv(os.path.join(app_root_directory, "secret_debug.env"))
 
 api: sly.Api = sly.Api.from_env()
 my_app = AppService()

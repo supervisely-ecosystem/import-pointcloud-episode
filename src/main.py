@@ -1,6 +1,4 @@
 import globals as g
-
-# import functions as f
 import supervisely as sly
 import os, shutil
 from supervisely.io.fs import silent_remove, get_file_name
@@ -25,14 +23,9 @@ class MyImport(sly.app.Import):
             else g.OUTPUT_PROJECT_NAME
         )
 
-        # input_dir, project_name = f.download_input_files(api, task_id, g.INPUT_DIR, g.INPUT_FILE)
-
-        # project_name = project_name if len(g.OUTPUT_PROJECT_NAME) == 0 else g.OUTPUT_PROJECT_NAME
-
         project_id, project_name = upload_pointcloud_episode_project(
-            project_name, g.api, context.workspace_id, project_name=project_name, log_progress=True
+            project_dir, g.api, context.workspace_id, project_name=project_name, log_progress=True
         )
-        # api.task.set_output_project(task_id, project_id, project_name)
 
         if g.REMOVE_SOURCE and not g.IS_ON_AGENT:
             if g.INPUT_DIR is not None:

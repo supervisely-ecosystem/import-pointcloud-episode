@@ -2,3 +2,5 @@ secret_debug.env
 .idea
 venv
 /src/debug
+__pycache__
+.venv

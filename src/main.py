@@ -15,8 +15,12 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
     api.task.set_output_project(task_id, project_id, project_name)
     
     if g.REMOVE_SOURCE and not g.IS_ON_AGENT:
-        api.file.remove(team_id=g.TEAM_ID, path=g.INPUT_DIR)
-        source_dir_name = g.INPUT_DIR.strip("/")
+        if g.INPUT_DIR is not None:
+            path_to_remove = g.INPUT_DIR
+        else:
+            path_to_remove = g.INPUT_FILE
+        api.file.remove(team_id=g.TEAM_ID, path=path_to_remove)
+        source_dir_name = path_to_remove.strip("/")
         sly.logger.info(
             msg=f"Source directory: '{source_dir_name}' was successfully removed."
         )

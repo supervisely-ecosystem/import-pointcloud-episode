@@ -89,14 +89,14 @@ pcd_episodes_project folder or .tar/.zip archive
 
 1. Add [Import Supervisely pointcloud episodes](https://ecosystem.supervise.ly/apps/import-pointcloud-episode) to your team from Ecosystem.
 
-<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/import-pointcloud-episode" src="https://i.imgur.com/JRM9WXO.png" width="450px" style='padding-bottom: 20px'/>  
+<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/import-pointcloud-episode" src="media/htr1.png" width="450px" style='padding-bottom: 20px'/>  
 
 2. Run app from the context menu of directory or archive in **Team Files** -> `Run app` -> `Import pointcloud episodes in supervisely format`
 
-<img src="https://i.imgur.com/AOhFNgm.png"/>
+<img src="media/htr2.png"/>
 
 # How To Use 
 
 1. Wait for the app to import your data (project will be created in the current workspace)
 
-<img src="https://i.imgur.com/UjcZZgP.png"/>  
+<img src="media/htu1.png"/>  

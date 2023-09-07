@@ -38,7 +38,9 @@ Backward compatible with [`Export Supervisely Pointcloud Episodes`](https://ecos
 
 # Preparation
 
-Upload your data in Supervisely pointcloud episodes [format](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode) to Team Files. It is possible to upload folder or archive (`.tar` or `.zip`).
+Upload your data in Supervisely pointcloud episodes [format](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode) to Team Files. It is possible to upload folder or archive (`.tar` or `.zip`).<br>
+
+ℹ️ You can download the archive with data example [here](https://github.com/supervisely-ecosystem/import-pointcloud-episode/files/12546714/my_pointcloud_episodes_project.zip).<br>
 
 Imported project structure has to be the following:
 ```text

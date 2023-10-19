@@ -4,3 +4,6 @@ venv
 /src/debug
 __pycache__
 .venv
+supervisely
+debug
+.vscode

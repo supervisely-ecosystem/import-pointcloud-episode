@@ -113,7 +113,7 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
             input_dir, api, g.WORKSPACE_ID, project_name=project_name, log_progress=True
         )
         api.task.set_output_project(task_id, project_id, project_name)
-        sly.logger.info(f"Project '{project_name}' was successfully uploaded to team files. ID: {project_id}")
+        sly.logger.info(f"Project '{project_name}' was successfully uploaded. ID: {project_id}")
 
     if g.REMOVE_SOURCE and not g.IS_ON_AGENT:
         if g.INPUT_DIR is not None:

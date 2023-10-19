@@ -13,9 +13,11 @@ from supervisely.api.module_api import ApiField
 def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger):
     input_dirs = f.download_input_files(api, task_id, g.INPUT_DIR, g.INPUT_FILE)
     for input_dir in input_dirs:
+        sly.logger.info(f"Working with '{input_dir}'")
         project_name = f.get_project_name_from_input_path(input_dir)
 
         project_name = project_name if len(g.OUTPUT_PROJECT_NAME) == 0 else g.OUTPUT_PROJECT_NAME
+        sly.logger.info(f"Project name: '{project_name}'")
 
         # * Validate related images with corresponding JSON annotation files *
         project_locally = sly.PointcloudEpisodeProject.read_single(input_dir)
@@ -111,6 +113,7 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
             input_dir, api, g.WORKSPACE_ID, project_name=project_name, log_progress=True
         )
         api.task.set_output_project(task_id, project_id, project_name)
+        sly.logger.info(f"Project '{project_name}' was successfully uploaded to team files. ID: {project_id}")
 
     if g.REMOVE_SOURCE and not g.IS_ON_AGENT:
         if g.INPUT_DIR is not None:

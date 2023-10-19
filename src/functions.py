@@ -10,8 +10,7 @@ import supervisely as sly
 
 def get_project_name_from_input_path(input_path: str) -> str:
     """Returns project name from target sly folder name."""
-    full_path_dir = os.path.dirname(input_path)
-    return os.path.basename(full_path_dir)
+    return os.path.basename(os.path.normpath(input_path))
 
 
 def download_input_files(api: sly.Api, task_id, input_dir, input_file):

@@ -48,7 +48,7 @@ def download_input_files(api: sly.Api, task_id, input_dir, input_file):
             z_file = zipfile.ZipFile(archive_path)
             z_file.extractall(extract_dir)
         else:
-            raise NotImplementedError("File extension is not supported.")
+            raise RuntimeError(f"File extension '{sly.fs.get_file_ext(archive_path)}' is not supported.")
         sly.fs.silent_remove(archive_path)
     sly.fs.remove_junk_from_dir(extract_dir)
 

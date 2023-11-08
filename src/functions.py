@@ -23,7 +23,7 @@ def files_exists(files, path):
 
 def check_input_path() -> None:
     if g.INPUT_DIR:
-        listdir = api.file.listdir(g.TEAM_ID, g.INPUT_DIR)
+        listdir = g.api.file.listdir(g.TEAM_ID, g.INPUT_DIR)
         if len(listdir) == 0:
             raise Exception("Input directory is empty.")
         if len(listdir) == 1 and get_file_ext(listdir[0]) in [".zip", ".tar"]:

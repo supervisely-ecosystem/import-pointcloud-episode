@@ -80,37 +80,37 @@ def check_input_path() -> None:
                     g.INPUT_DIR, g.INPUT_FILE = parent_dir, None
 
 
-def download_input_files(api: sly.Api, task_id, input_dir, input_file):
+def download_input_files(api: sly.Api, task_id):
     if not g.IS_ON_AGENT:
         check_input_path()
 
-    if input_dir:
+    if g.INPUT_DIR:
         if g.IS_ON_AGENT:
-            agent_id, cur_files_path = api.file.parse_agent_id_and_path(input_dir)
+            agent_id, cur_files_path = api.file.parse_agent_id_and_path(g.INPUT_DIR)
         else:
-            cur_files_path = input_dir
+            cur_files_path = g.INPUT_DIR
 
         if not cur_files_path.endswith("/"):
             cur_files_path += "/"
-        sizeb = api.file.get_directory_size(g.TEAM_ID, input_dir)
+        sizeb = api.file.get_directory_size(g.TEAM_ID, g.INPUT_DIR)
         extract_dir = os.path.join(g.storage_dir, cur_files_path.strip("/"))
         progress_cb = download_progress.get_progress_cb(
             api, task_id, f"Downloading {g.INPUT_DIR.strip('/')}", sizeb, is_size=True
         )
-        api.file.download_directory(g.TEAM_ID, input_dir, extract_dir, progress_cb)
+        api.file.download_directory(g.TEAM_ID, g.INPUT_DIR, extract_dir, progress_cb)
     else:
         if g.IS_ON_AGENT:
-            agent_id, cur_files_path = api.file.parse_agent_id_and_path(input_file)
+            agent_id, cur_files_path = api.file.parse_agent_id_and_path(g.INPUT_FILE)
         else:
-            cur_files_path = input_file
+            cur_files_path = g.INPUT_FILE
 
-        sizeb = api.file.get_info_by_path(g.TEAM_ID, input_file).sizeb
+        sizeb = api.file.get_info_by_path(g.TEAM_ID, g.INPUT_FILE).sizeb
         archive_path = os.path.join(g.storage_dir, sly.fs.get_file_name_with_ext(cur_files_path))
         extract_dir = os.path.join(g.storage_dir, sly.fs.get_file_name(cur_files_path))
         progress_cb = download_progress.get_progress_cb(
             api, task_id, f"Downloading {g.INPUT_FILE.lstrip('/')}", sizeb, is_size=True
         )
-        api.file.download(g.TEAM_ID, input_file, archive_path, None, progress_cb)
+        api.file.download(g.TEAM_ID, g.INPUT_FILE, archive_path, None, progress_cb)
 
         if tarfile.is_tarfile(archive_path):
             with tarfile.open(archive_path) as archive:

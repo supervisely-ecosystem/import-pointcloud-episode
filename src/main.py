@@ -12,7 +12,7 @@ from supervisely.api.module_api import ApiField
 @sly.timeit
 def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger):
     projects_cnt = 0
-    input_dirs = f.download_input_files(api, task_id, g.INPUT_DIR, g.INPUT_FILE)
+    input_dirs = f.download_input_files(api, task_id)
     for input_dir in input_dirs:
         sly.logger.info(f"Working with '{input_dir}'")
         project_name = f.get_project_name_from_input_path(input_dir)

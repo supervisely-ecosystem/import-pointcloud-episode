@@ -11,6 +11,7 @@ from supervisely.api.module_api import ApiField
 @g.my_app.callback("import_pointcloud_episode")
 @sly.timeit
 def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger):
+    projects_cnt = 0
     input_dirs = f.download_input_files(api, task_id, g.INPUT_DIR, g.INPUT_FILE)
     for input_dir in input_dirs:
         sly.logger.info(f"Working with '{input_dir}'")
@@ -114,7 +115,10 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
         )
         api.task.set_output_project(task_id, project_id, project_name)
         sly.logger.info(f"Project '{project_name}' was successfully uploaded. ID: {project_id}")
+        projects_cnt += 1
 
+    if projects_cnt == 0:
+        sly.logger.warn("No projects were uploaded. Please, check input data.")
     if g.REMOVE_SOURCE and not g.IS_ON_AGENT:
         if g.INPUT_DIR is not None:
             path_to_remove = g.INPUT_DIR

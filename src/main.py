@@ -118,7 +118,7 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
         projects_cnt += 1
 
     if projects_cnt == 0:
-        sly.logger.warn("No projects were uploaded. Please, check input data.")
+        raise Exception("No pointcloud episodes projects were uploaded. Please check your data.")
     if g.REMOVE_SOURCE and not g.IS_ON_AGENT:
         if g.INPUT_DIR is not None:
             path_to_remove = g.INPUT_DIR

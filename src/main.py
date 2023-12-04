@@ -39,7 +39,7 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
 
     if len(only_pcd_dirs) > 0:
         sly.logger.info(
-            f"Trying to upload only pointclouds to the new project from the directory {input_dir}."
+            f"Trying to upload only pointclouds to the new project from the directories {only_pcd_dirs}."
         )
         f.upload_only_pcd(api, only_pcd_dirs)
         projects_cnt += 1

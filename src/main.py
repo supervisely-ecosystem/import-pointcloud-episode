@@ -38,6 +38,7 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
                 only_pcd_dirs.append(input_dir)
 
     if len(only_pcd_dirs) > 0:
+        sly.logger.warn("Not found pointcloud episodes projects in Supervisely format.")
         sly.logger.info(
             f"Trying to upload only pointclouds to the new project from the directories {only_pcd_dirs}."
         )

@@ -35,12 +35,12 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
                 projects_cnt += 1
             except Exception as e:
                 sly.logger.warn(f"Project '{project_name}' was not uploaded correctly. Error: {e}")
-                sly.logger.info(
-                    f"Trying to upload only pointclouds to the new project from the directory {input_dir}."
-                )
                 only_pcd_dirs.append(input_dir)
 
     if len(only_pcd_dirs) > 0:
+        sly.logger.info(
+            f"Trying to upload only pointclouds to the new project from the directory {input_dir}."
+        )
         f.upload_only_pcd(api, only_pcd_dirs)
         projects_cnt += 1
 

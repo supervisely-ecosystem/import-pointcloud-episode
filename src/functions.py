@@ -266,6 +266,8 @@ def upload_only_pcd(api: sly.Api, input_dirs):
             valid_extensions=sly.pointcloud.ALLOWED_POINTCLOUD_EXTENSIONS,
             ignore_valid_extensions_case=True,
         )
+        # sort by names:
+        pcd_paths = sorted(pcd_paths)
         if len(pcd_paths) == 0:
             continue
         dataset_name = os.path.basename(os.path.normpath(input_dir))

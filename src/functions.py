@@ -266,6 +266,8 @@ def upload_only_pcd(api: sly.Api, input_dirs):
             valid_extensions=sly.pointcloud.ALLOWED_POINTCLOUD_EXTENSIONS,
             ignore_valid_extensions_case=True,
         )
+        # sort by names:
+        pcd_paths = sorted(pcd_paths)
         if len(pcd_paths) == 0:
             continue
         dataset_name = os.path.basename(os.path.normpath(input_dir))
@@ -276,7 +278,13 @@ def upload_only_pcd(api: sly.Api, input_dirs):
         if len(pcd_names) != len(pcd_paths):
             sly.logger.warn("Not all files have valid pointcloud extensions.")
             continue
-        pcd_infos = api.image.upload_paths(dataset.id, pcd_names, pcd_paths)
+        metas = [{"frame": i} for i in range(len(pcd_paths))]
+        progress_cb = sly.Progress(
+            f"Uploading pointclouds...", total_cnt=len(pcd_paths)
+        ).iters_done_report
+        pcd_infos = api.pointcloud_episode.upload_paths(
+            dataset.id, pcd_names, pcd_paths, progress_cb, metas
+        )
         pcd_cnt += len(pcd_infos)
         sly.fs.remove_dir(input_dir)
     if pcd_cnt > 1:

@@ -20,11 +20,11 @@ if sly.is_development():
 api: sly.Api = sly.Api.from_env()
 my_app = AppService()
 
-TASK_ID = int(os.environ["TASK_ID"])
-TEAM_ID = os.environ["context.teamId"]
-WORKSPACE_ID = os.environ["context.workspaceId"]
-INPUT_DIR = os.environ.get("modal.state.slyFolder")
-INPUT_FILE = os.environ.get("modal.state.slyFile")
+TASK_ID = sly.env.task_id()
+TEAM_ID = sly.env.team_id()
+WORKSPACE_ID = sly.env.workspace_id()
+INPUT_DIR = sly.env.folder()
+INPUT_FILE = sly.env.file()
 
 OUTPUT_PROJECT_NAME = os.environ.get("modal.state.project_name", "")
 REMOVE_SOURCE = bool(strtobool(os.getenv("modal.state.remove_source")))

@@ -6,9 +6,7 @@ from supervisely.project.pointcloud_episode_project import (
 )
 
 
-@g.my_app.callback("import_pointcloud_episode")
-@sly.timeit
-def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger):
+def import_pointcloud_episode(api: sly.Api, task_id):
     projects_cnt = 0
     project_dirs, only_pcd_dirs = f.download_input_files(api, task_id)
 
@@ -67,6 +65,7 @@ def import_pointcloud_episode(api: sly.Api, task_id, context, state, app_logger)
     g.my_app.stop()
 
 
+@sly.handle_exceptions(has_ui=False)
 def main():
     sly.logger.info(
         "Script arguments",
@@ -78,7 +77,7 @@ def main():
         },
     )
 
-    g.my_app.run(initial_events=[{"command": "import_pointcloud_episode"}])
+    import_pointcloud_episode(g.api, g.TASK_ID)
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ import supervisely as sly
 from supervisely.project.pointcloud_episode_project import (
     upload_pointcloud_episode_project,
 )
-
+import workflow as w
 
 def import_pointcloud_episode(api: sly.Api, task_id):
     projects_cnt = 0
@@ -30,6 +30,7 @@ def import_pointcloud_episode(api: sly.Api, task_id):
                 sly.logger.info(
                     f"Project '{project_name}' was successfully uploaded. ID: {project_id}"
                 )
+                w.workflow_output(api, project_id)
                 projects_cnt += 1
             except Exception as e:
                 sly.logger.warn(f"Project '{project_name}' was not uploaded correctly. Error: {e}")
@@ -40,7 +41,8 @@ def import_pointcloud_episode(api: sly.Api, task_id):
         sly.logger.info(
             f"Trying to upload only pointclouds to the new project from the directories {only_pcd_dirs}."
         )
-        f.upload_only_pcd(api, only_pcd_dirs)
+        project_info = f.upload_only_pcd(api, only_pcd_dirs)
+        w.workflow_output(api, project_info.id)
         projects_cnt += 1
 
     if len(project_dirs) == 0 and len(only_pcd_dirs) == 0:

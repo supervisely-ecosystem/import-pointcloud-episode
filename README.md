@@ -12,33 +12,33 @@
 
 
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/import-pointcloud-episode)
-[![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervise.ly/slack)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervisely.com/apps/import-pointcloud-episode)
+[![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervisely.com/slack)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/import-pointcloud-episode)
-[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/import-pointcloud-episode.png)](https://supervise.ly)
-[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/import-pointcloud-episode.png)](https://supervise.ly)
+[![views](https://app.supervisely.com/img/badges/views/supervisely-ecosystem/import-pointcloud-episode.png)](https://supervisely.com)
+[![runs](https://app.supervisely.com/img/badges/runs/supervisely-ecosystem/import-pointcloud-episode.png)](https://supervisely.com)
 
 </div>
 
 ## Overview
 
 Import Supervisely pointcloud episodes format project from Team Files folder or archive.  
-You can learn more about format and its structure by reading [documentation](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
+You can learn more about format and its structure by reading [documentation](https://docs.supervisely.com/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
 
 <img src="https://github.com/supervisely-ecosystem/import-kitti-360/releases/download/v0.0.4/pointcloud-episodes.gif?raw=true" style="width: 100%;"/>
 
-Backward compatible with [`Export Supervisely Pointcloud Episodes`](https://ecosystem.supervise.ly/apps/export-pointcloud-episode) app
+Backward compatible with [`Export Supervisely Pointcloud Episodes`](https://ecosystem.supervisely.com/apps/export-pointcloud-episode) app
 
 🏋️ Starting from version `v1.1.3` application supports import from special directory on your local computer. It is made for Enterprise Edition customers who need to upload tens or even hundreds of gigabytes of data without using drag-ang-drop mechanism:
 
 1. Run agent on your computer where data is stored. Watch [how-to video](https://youtu.be/aO7Zc4kTrVg).
-2. Copy your data to special folder on your computer that was created by agent. Agent mounts this directory to your Supervisely instance and it becomes accessible in Team Files. Learn more [in documentation](https://docs.supervise.ly/customization/agents/agent-storage). Watch [how-to video](https://youtu.be/63Kc8Xq9H0U).
+2. Copy your data to special folder on your computer that was created by agent. Agent mounts this directory to your Supervisely instance and it becomes accessible in Team Files. Learn more [in documentation](https://docs.supervisely.com/customization/agents/agent-storage). Watch [how-to video](https://youtu.be/63Kc8Xq9H0U).
 3. Go to `Team Files` -> `Supervisely Agent` and find your folder there.
 4. Right click to open context menu and start app. Now app will upload data directly from your computer to the platform.
 
 # Preparation
 
-Upload your data in Supervisely pointcloud episodes [format](https://docs.supervise.ly/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode) to Team Files. It is possible to upload folder or archive (`.tar` or `.zip`).<br>
+Upload your data in Supervisely pointcloud episodes [format](https://docs.supervisely.com/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode) to Team Files. It is possible to upload folder or archive (`.tar` or `.zip`).<br>
 
 ℹ️ You can download the archive with data example [here](https://github.com/supervisely-ecosystem/import-pointcloud-episode/files/12546714/my_pointcloud_episodes_project.zip).<br>
 
@@ -89,7 +89,7 @@ pcd_episodes_project folder or .tar/.zip archive
 
 # How To Run 
 
-1. Add [Import Supervisely pointcloud episodes](https://ecosystem.supervise.ly/apps/import-pointcloud-episode) to your team from Ecosystem.
+1. Add [Import Supervisely pointcloud episodes](https://ecosystem.supervisely.com/apps/import-pointcloud-episode) to your team from Ecosystem.
 
 <img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/import-pointcloud-episode" src="https://i.imgur.com/JRM9WXO.png" width="450px" style='padding-bottom: 20px'/>  
 

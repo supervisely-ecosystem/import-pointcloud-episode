@@ -12,7 +12,7 @@
 
 
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](../../../../supervisely-ecosystem/import-pointcloud-episode)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervisely.com/apps/import-pointcloud-episode)
 [![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervisely.com/slack)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/import-pointcloud-episode)
 [![views](https://app.supervisely.com/img/badges/views/supervisely-ecosystem/import-pointcloud-episode.png)](https://supervisely.com)
@@ -27,7 +27,7 @@ You can learn more about format and its structure by reading [documentation](htt
 
 <img src="https://github.com/supervisely-ecosystem/import-kitti-360/releases/download/v0.0.4/pointcloud-episodes.gif?raw=true" style="width: 100%;"/>
 
-Backward compatible with [`Export Supervisely Pointcloud Episodes`](../../../../supervisely-ecosystem/export-pointcloud-episode) app
+Backward compatible with [`Export Supervisely Pointcloud Episodes`](https://ecosystem.supervisely.com/apps/export-pointcloud-episode) app
 
 🏋️ Starting from version `v1.1.3` application supports import from special directory on your local computer. It is made for Enterprise Edition customers who need to upload tens or even hundreds of gigabytes of data without using drag-ang-drop mechanism:
 
@@ -89,7 +89,7 @@ pcd_episodes_project folder or .tar/.zip archive
 
 # How To Run 
 
-1. Add [Import Supervisely pointcloud episodes](../../../../supervisely-ecosystem/import-pointcloud-episode) to your team from Ecosystem.
+1. Add [Import Supervisely pointcloud episodes](https://ecosystem.supervisely.com/apps/import-pointcloud-episode) to your team from Ecosystem.
 
 <img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/import-pointcloud-episode" src="https://i.imgur.com/JRM9WXO.png" width="450px" style='padding-bottom: 20px'/>  
 

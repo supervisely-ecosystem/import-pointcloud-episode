@@ -33,17 +33,23 @@ def import_pointcloud_episode(api: sly.Api, task_id):
                 w.workflow_output(api, project_id)
                 projects_cnt += 1
             except Exception as e:
-                sly.logger.warn(f"Project '{project_name}' was not uploaded correctly. Error: {e}")
+                sly.logger.warning(f"Project '{project_name}' was not uploaded correctly. Error: {e}")
                 only_pcd_dirs.append(input_dir)
 
     if len(only_pcd_dirs) > 0:
-        sly.logger.warn("Not found pointcloud episodes projects in Supervisely format.")
+        sly.logger.warning("Not found pointcloud episodes projects in Supervisely format.")
         sly.logger.info(
             f"Trying to upload only pointclouds to the new project from the directories {only_pcd_dirs}."
         )
         project_info = f.upload_only_pcd(api, only_pcd_dirs)
-        w.workflow_output(api, project_info.id)
-        projects_cnt += 1
+        if not project_info:
+            msg = "Failed to upload pointclouds to the new project."
+            description = "Please, check the logs for details."
+            sly.logger.error(msg)
+            api.task.set_output_error(task_id, msg, description)
+        else:
+            w.workflow_output(api, project_info.id)
+            projects_cnt += 1
 
     if len(project_dirs) == 0 and len(only_pcd_dirs) == 0:
         msg = "Not found pointcloud episodes project in Supervisely format"

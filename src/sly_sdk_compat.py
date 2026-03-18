@@ -37,7 +37,14 @@ def _patch_project_read_single(ProjectCls) -> None:
         try:
             for dataset in project.datasets:
                 try:
-                    dataset.name = _wrap_str_with_removesuffix(dataset.name)
+                    if hasattr(dataset, "_name"):
+                        dataset._name = _wrap_str_with_removesuffix(dataset._name)
+                    else:
+                        # Fallback for unexpected SDK changes
+                        dataset_name = getattr(dataset, "name", None)
+                        wrapped = _wrap_str_with_removesuffix(dataset_name)
+                        if wrapped is not dataset_name:
+                            setattr(dataset, "_name", wrapped)
                 except Exception:
                     continue
         except Exception:

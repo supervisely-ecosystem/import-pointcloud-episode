@@ -40,11 +40,15 @@ def is_archive_path(path):
 
 
 def get_project_dirs(input_dir):
-    project_dirs = [project_dir for project_dir in sly.fs.dirs_filter(input_dir, search_projects)]
+    project_dirs = [
+        project_dir for project_dir in sly.fs.dirs_filter(input_dir, search_projects)
+    ]
 
     only_pcd_dirs = []
     if len(project_dirs) == 0:
-        only_pcd_dirs = [pcd_dir for pcd_dir in sly.fs.dirs_filter(input_dir, search_pcd_dir)]
+        only_pcd_dirs = [
+            pcd_dir for pcd_dir in sly.fs.dirs_filter(input_dir, search_pcd_dir)
+        ]
     return project_dirs, only_pcd_dirs
 
 
@@ -60,21 +64,33 @@ def check_input_path() -> None:
             g.INPUT_DIR, g.INPUT_FILE = None, listdir[0]
         elif len(listdir) > 1 and any(is_archive_path(f) for f in listdir):
             raise ValueError("Multiple archives are not supported.")
-        elif files_exists(["annotation.json", "frame_pointcloud_map.json"], g.INPUT_DIR):
+        elif files_exists(
+            ["annotation.json", "frame_pointcloud_map.json"], g.INPUT_DIR
+        ):
             g.INPUT_DIR, g.INPUT_FILE = dirname(normpath(g.INPUT_DIR)), None
 
-        elif all([get_file_ext(x) in [".json"] + sly.image.SUPPORTED_IMG_EXTS for x in listdir]):
+        elif all(
+            [
+                get_file_ext(x) in [".json"] + sly.image.SUPPORTED_IMG_EXTS
+                for x in listdir
+            ]
+        ):
             if basename(dirname(normpath(g.INPUT_DIR))) == "related_images":
                 parent_dir = dirname(dirname(normpath(g.INPUT_DIR)))
-                if files_exists(["annotation.json", "frame_pointcloud_map.json"], parent_dir):
+                if files_exists(
+                    ["annotation.json", "frame_pointcloud_map.json"], parent_dir
+                ):
                     parent_dir = dirname(normpath(parent_dir))
                 if parent_dir != "/" and files_exists(["meta.json"], parent_dir):
                     g.INPUT_DIR, g.INPUT_FILE = parent_dir, None
         elif (
-            basename(normpath(g.INPUT_DIR)) == "pointcloud" and get_file_ext(listdir[0]) == ".pcd"
+            basename(normpath(g.INPUT_DIR)) == "pointcloud"
+            and get_file_ext(listdir[0]) == ".pcd"
         ) or basename(normpath(g.INPUT_DIR)) == "related_images":
             parent_dir = dirname(normpath(g.INPUT_DIR))
-            if files_exists(["annotation.json", "frame_pointcloud_map.json"], parent_dir):
+            if files_exists(
+                ["annotation.json", "frame_pointcloud_map.json"], parent_dir
+            ):
                 parent_dir = dirname(normpath(parent_dir))
             if parent_dir != "/" and files_exists(["meta.json"], parent_dir):
                 g.INPUT_DIR, g.INPUT_FILE = parent_dir, None
@@ -98,7 +114,9 @@ def check_input_path() -> None:
                     parent_dir = dirname(parent_dir)
                 if basename(normpath(parent_dir)) == "related_images":
                     parent_dir = dirname(parent_dir)
-                if files_exists(["annotation.json", "frame_pointcloud_map.json"], parent_dir):
+                if files_exists(
+                    ["annotation.json", "frame_pointcloud_map.json"], parent_dir
+                ):
                     parent_dir = dirname(parent_dir)
                 if files_exists(["meta.json"], parent_dir):
                     parent_dir = dirname(parent_dir)
@@ -107,7 +125,9 @@ def check_input_path() -> None:
             elif sly.pointcloud.has_valid_ext(g.INPUT_FILE):
                 parent_dir = dirname(normpath(g.INPUT_FILE))
                 possible_ds_dir = dirname(parent_dir)
-                if files_exists(["annotation.json", "frame_pointcloud_map.json"], possible_ds_dir):
+                if files_exists(
+                    ["annotation.json", "frame_pointcloud_map.json"], possible_ds_dir
+                ):
                     parent_dir = possible_ds_dir
                 possible_proj_dir = dirname(parent_dir)
                 if files_exists(["meta.json"], possible_proj_dir):
@@ -140,7 +160,9 @@ def download_input_files(api: sly.Api, task_id):
             cur_files_path = g.INPUT_FILE
 
         sizeb = api.file.get_info_by_path(g.TEAM_ID, g.INPUT_FILE).sizeb
-        archive_path = os.path.join(g.storage_dir, sly.fs.get_file_name_with_ext(cur_files_path))
+        archive_path = os.path.join(
+            g.storage_dir, sly.fs.get_file_name_with_ext(cur_files_path)
+        )
         extract_dir = os.path.join(g.storage_dir, sly.fs.get_file_name(cur_files_path))
         progress_cb = download_progress.get_progress_cb(
             api, task_id, f"Downloading {g.INPUT_FILE.lstrip('/')}", sizeb, is_size=True
@@ -185,57 +207,86 @@ def validate_local_project(input_dir):
                         path, sly.fs.get_file_name_with_ext(file) + ".json"
                     )
                     if not sly.fs.file_exists(img_meta_path):
-                        bad_related_images[g.RELATED_IMAGES_ANN_NOT_FOUND][name].append(file_name)
+                        bad_related_images[g.RELATED_IMAGES_ANN_NOT_FOUND][name].append(
+                            file_name
+                        )
                         sly.fs.silent_remove(file)
                         continue
                     img_meta = sly.json.load_json_file(img_meta_path)
                     need_required_field = False
                     for field in g.RELATED_IMAGES_ANN_FIELDS:
                         if field not in img_meta.keys():
-                            bad_related_images[g.RELATED_IMAGES_ANN_WRONG_FIELDS(field)][
-                                name
-                            ].append(file)
+                            bad_related_images[
+                                g.RELATED_IMAGES_ANN_WRONG_FIELDS(field)
+                            ][name].append(file)
                             need_required_field = True
                     if need_required_field:
                         sly.fs.silent_remove(file)
                         continue
                     if img_meta[ApiField.NAME] != sly.fs.get_file_name_with_ext(file):
-                        bad_related_images[g.RELATED_IMAGES_ANN_WRONG_NAME][name].append(file_name)
+                        bad_related_images[g.RELATED_IMAGES_ANN_WRONG_NAME][
+                            name
+                        ].append(file_name)
                         sly.fs.silent_remove(file)
                         continue
                     if not isinstance(img_meta[ApiField.META], dict):
-                        bad_related_images[g.RELATED_IMAGES_ANN_META_TYPE][name].append(file_name)
+                        bad_related_images[g.RELATED_IMAGES_ANN_META_TYPE][name].append(
+                            file_name
+                        )
                         sly.fs.silent_remove(file)
                         continue
-                    if g.RELATED_IMAGES_SENSOR_DATA not in img_meta[ApiField.META].keys():
-                        bad_related_images[g.SENSOR_DATA_NOT_FOUND][name].append(file_name)
+                    if (
+                        g.RELATED_IMAGES_SENSOR_DATA
+                        not in img_meta[ApiField.META].keys()
+                    ):
+                        bad_related_images[g.SENSOR_DATA_NOT_FOUND][name].append(
+                            file_name
+                        )
                         sly.fs.silent_remove(file)
                         continue
-                    if not isinstance(img_meta[ApiField.META][g.RELATED_IMAGES_SENSOR_DATA], dict):
+                    if not isinstance(
+                        img_meta[ApiField.META][g.RELATED_IMAGES_SENSOR_DATA], dict
+                    ):
                         bad_related_images[g.SENSOR_DATA_TYPE][name].append(file_name)
                         sly.fs.silent_remove(file)
                         continue
                     bad_sensor_data_field = False
-                    for field, valid_length in g.RELATED_IMAGES_SENSOR_DATA_FIELDS.items():
+                    for (
+                        field,
+                        valid_length,
+                    ) in g.RELATED_IMAGES_SENSOR_DATA_FIELDS.items():
                         if (
                             field
-                            not in img_meta[ApiField.META][g.RELATED_IMAGES_SENSOR_DATA].keys()
+                            not in img_meta[ApiField.META][
+                                g.RELATED_IMAGES_SENSOR_DATA
+                            ].keys()
                         ):
-                            bad_related_images[g.SENSOR_DATA_FIELD(field)][name].append(file_name)
-                            bad_sensor_data_field = True
-                        elif not isinstance(
-                            img_meta[ApiField.META][g.RELATED_IMAGES_SENSOR_DATA][field], list
-                        ):
-                            bad_related_images[g.SENSOR_DATA_FIELDS_TYPE(field)][name].append(
+                            bad_related_images[g.SENSOR_DATA_FIELD(field)][name].append(
                                 file_name
                             )
                             bad_sensor_data_field = True
+                        elif not isinstance(
+                            img_meta[ApiField.META][g.RELATED_IMAGES_SENSOR_DATA][
+                                field
+                            ],
+                            list,
+                        ):
+                            bad_related_images[g.SENSOR_DATA_FIELDS_TYPE(field)][
+                                name
+                            ].append(file_name)
+                            bad_sensor_data_field = True
                         elif (
-                            len(img_meta[ApiField.META][g.RELATED_IMAGES_SENSOR_DATA][field])
+                            len(
+                                img_meta[ApiField.META][g.RELATED_IMAGES_SENSOR_DATA][
+                                    field
+                                ]
+                            )
                             != valid_length
                         ):
                             bad_related_images[
-                                g.SENSOR_DATA_WRONG_LENGTH({"field": field, "length": valid_length})
+                                g.SENSOR_DATA_WRONG_LENGTH(
+                                    {"field": field, "length": valid_length}
+                                )
                             ][name].append(file_name)
                             bad_sensor_data_field = True
                     if bad_sensor_data_field:
@@ -271,9 +322,13 @@ def upload_only_pcd(api: sly.Api, input_dirs):
         if len(pcd_paths) == 0:
             continue
         dataset_name = os.path.basename(os.path.normpath(input_dir))
-        dataset = api.dataset.create(project.id, dataset_name, change_name_if_conflict=True)
+        dataset = api.dataset.create(
+            project.id, dataset_name, change_name_if_conflict=True
+        )
         pcd_names = [
-            os.path.basename(path) for path in pcd_paths if sly.pointcloud.has_valid_ext(path)
+            os.path.basename(path)
+            for path in pcd_paths
+            if sly.pointcloud.has_valid_ext(path)
         ]
         if len(pcd_names) != len(pcd_paths):
             sly.logger.warn("Not all files have valid pointcloud extensions.")
@@ -288,9 +343,13 @@ def upload_only_pcd(api: sly.Api, input_dirs):
         pcd_cnt += len(pcd_infos)
         sly.fs.remove_dir(input_dir)
     if pcd_cnt > 1:
-        sly.logger.info(f"{pcd_cnt} pointclouds were uploaded to project '{project.name}'.")
+        sly.logger.info(
+            f"{pcd_cnt} pointclouds were uploaded to project '{project.name}'."
+        )
     elif pcd_cnt == 1:
-        sly.logger.info(f"{pcd_cnt} pointcloud was uploaded to project '{project.name}'.")
+        sly.logger.info(
+            f"{pcd_cnt} pointcloud was uploaded to project '{project.name}'."
+        )
     else:
         api.project.remove(project.id)
         return None

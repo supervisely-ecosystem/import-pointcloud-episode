@@ -25,6 +25,8 @@
 Import Supervisely pointcloud episodes format project from Team Files folder or archive.  
 You can learn more about format and its structure by reading [documentation](https://docs.supervisely.com/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
 
+Supported pointcloud file formats: **`.pcd`**, **`.ply`**, **`.las`**, **`.laz`**.
+
 <img src="https://github.com/supervisely-ecosystem/import-kitti-360/releases/download/v0.0.4/pointcloud-episodes.gif?raw=true" style="width: 100%;"/>
 
 Backward compatible with [`Export Supervisely Pointcloud Episodes`](https://ecosystem.supervisely.com/apps/export-pointcloud-episode) app
@@ -51,7 +53,7 @@ pcd_episodes_project folder or .tar/.zip archive
 │ ├── annotation.json               
 │ ├── frame_pointcloud_map.json     
 │ ├── pointcloud                    
-│ │ ├── scene_1.pcd           
+│ │ ├── scene_1.pcd  (.ply/.las/.laz also supported)
 │ │ ├── scene_2.pcd   
 │ │ └── ...                
 │ └── related_images                

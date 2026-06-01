@@ -85,7 +85,7 @@ def check_input_path() -> None:
                     g.INPUT_DIR, g.INPUT_FILE = parent_dir, None
         elif (
             basename(normpath(g.INPUT_DIR)) == "pointcloud"
-            and get_file_ext(listdir[0]) == ".pcd"
+            and any(sly.pointcloud.has_valid_ext(f) for f in listdir)
         ) or basename(normpath(g.INPUT_DIR)) == "related_images":
             parent_dir = dirname(normpath(g.INPUT_DIR))
             if files_exists(

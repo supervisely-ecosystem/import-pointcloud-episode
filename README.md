@@ -1,7 +1,7 @@
 <div align="center" markdown>
 <img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.0.0/poster.png">
 
-# Import Pointcloud Episodes
+# Import Point Cloud Episodes
 
 <p align="center">
   <a href="#Overview">Overview</a> •
@@ -22,12 +22,14 @@
 
 ## Overview
 
-Import Supervisely pointcloud episodes format project from Team Files folder or archive.  
+Import Point Cloud Episodes project in Supervisely format.  
 You can learn more about format and its structure by reading [documentation](https://docs.supervisely.com/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode).
 
-<img src="https://github.com/supervisely-ecosystem/import-kitti-360/releases/download/v0.0.4/pointcloud-episodes.gif?raw=true" style="width: 100%;"/>
+Supported point cloud file formats: **`.pcd`**, **`.ply`**, **`.las`**, **`.laz`**.
 
-Backward compatible with [`Export Supervisely Pointcloud Episodes`](https://ecosystem.supervisely.com/apps/export-pointcloud-episode) app
+<video width="100%" src="https://private-user-images.githubusercontent.com/57998637/601549978-180d8ca6-0c62-41f9-ba85-f255dd5c5264.mp4?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODA0MDMyNTEsIm5iZiI6MTc4MDQwMjk1MSwicGF0aCI6Ii81Nzk5ODYzNy82MDE1NDk5NzgtMTgwZDhjYTYtMGM2Mi00MWY5LWJhODUtZjI1NWRkNWM1MjY0Lm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA2MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNjAyVDEyMjIzMVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWI1YzRjNmM5YTBhYWMyNjFmYmY0MjA1MzY1YTUzODU0YTllYjFjZWI3ZDUzZDEzZDQ3MzlhZTlmNzUyNGRhMjEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT12aWRlbyUyRm1wNCJ9.KOj1wR78vfQarFcyJG7q0uM39MiUDf3wYQO7XjjBw8s" autoplay loop muted></video>
+
+Backward compatible with [`Export Supervisely Point Cloud Episodes`](https://ecosystem.supervisely.com/apps/export-pointcloud-episode) app
 
 🏋️ Starting from version `v1.1.3` application supports import from special directory on your local computer. It is made for Enterprise Edition customers who need to upload tens or even hundreds of gigabytes of data without using drag-ang-drop mechanism:
 
@@ -38,67 +40,69 @@ Backward compatible with [`Export Supervisely Pointcloud Episodes`](https://ecos
 
 # Preparation
 
-Upload your data in Supervisely pointcloud episodes [format](https://docs.supervisely.com/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode) to Team Files. It is possible to upload folder or archive (`.tar` or `.zip`).<br>
+Upload your data in Supervisely Point Cloud Episodes [format](https://docs.supervisely.com/data-organization/00_ann_format_navi/07_supervisely_format_pointcloud_episode) to Team Files. It is possible to upload folder or archive (`.tar` or `.zip`).<br>
 
 ℹ️ You can download the archive with data example [here](https://github.com/supervisely-ecosystem/import-pointcloud-episode/files/12546714/my_pointcloud_episodes_project.zip).<br>
 
 Imported project structure has to be the following:
 ```text
-pcd_episodes_project folder or .tar/.zip archive   
-├── key_id_map.json (optional)                
-├── meta.json     
-├── dataset1                        
-│ ├── annotation.json               
-│ ├── frame_pointcloud_map.json     
-│ ├── pointcloud                    
-│ │ ├── scene_1.pcd           
-│ │ ├── scene_2.pcd   
-│ │ └── ...                
-│ └── related_images                
-│     ├── scene_1_pcd               
-│     │ ├── scene_1_cam0.png       
-│     │ ├── scene_1_cam0.png.json  
-│     │ ├── scene_1_cam1.png       
-│     │ ├── scene_1_cam1.png.json  
-│     │ └── ... 
-│     ├── scene_2_pcd               
-│     │ ├── scene_2_cam0.png       
-│     │ ├── scene_2_cam0.png.json  
-│     │ ├── scene_2_cam1.png       
-│     │ ├── scene_2_cam1.png.json  
-│     │ └── ... 
-│     └── ...      
-├── dataset2                        
-│ ├── annotation.json               
-│ ├── frame_pointcloud_map.json     
-│ ├── pointcloud                    
-│ │ ├── scene_1.pcd                 
-│ │ └── ...               
-│ └── related_images                
-│     ├── scene_1_pcd               
-│     │ ├── scene_1_cam0.png       
-│     │ ├── scene_1_cam0.png.json    
-│     │ └── ... 
-│     ├── scene_2_pcd               
-│     │ ├── scene_2_cam0.png       
-│     │ ├── scene_2_cam0.png.json  
-│     │ └── ... 
-│     └── ...                    
-└── dataset...                       
+📦 pcd_episodes_project folder or .tar/.zip archive
+├── 📜 key_id_map.json (optional)
+├── 📜 meta.json
+├── 📂 dataset1
+│   ├── 📜 annotation.json
+│   ├── 📜 frame_pointcloud_map.json
+│   ├── 📂 pointcloud
+│   │   ├── 📄 scene_1.pcd  (.ply/.las/.laz also supported)
+│   │   ├── 📄 scene_2.pcd
+│   │   └── ...
+│   └── 📂 related_images
+│       ├── 📂 scene_1_pcd
+│       │   ├── 🖼️ scene_1_cam0.png
+│       │   ├── 📜 scene_1_cam0.png.json
+│       │   ├── 🖼️ scene_1_cam1.png
+│       │   ├── 📜 scene_1_cam1.png.json
+│       │   └── ...
+│       ├── 📂 scene_2_pcd
+│       │   ├── 🖼️ scene_2_cam0.png
+│       │   ├── 📜 scene_2_cam0.png.json
+│       │   ├── 🖼️ scene_2_cam1.png
+│       │   ├── 📜 scene_2_cam1.png.json
+│       │   └── ...
+│       └── ...
+├── 📂 dataset2
+│   ├── 📜 annotation.json
+│   ├── 📜 frame_pointcloud_map.json
+│   ├── 📂 pointcloud
+│   │   ├── 📄 scene_1.pcd
+│   │   └── ...
+│   └── 📂 related_images
+│       ├── 📂 scene_1_pcd
+│       │   ├── 🖼️ scene_1_cam0.png
+│       │   ├── 📜 scene_1_cam0.png.json
+│       │   └── ...
+│       ├── 📂 scene_2_pcd
+│       │   ├── 🖼️ scene_2_cam0.png
+│       │   ├── 📜 scene_2_cam0.png.json
+│       │   └── ...
+│       └── ...
+└── 📂 dataset...
 ```
 
-# How To Run 
+# How To Run
 
-1. Add [Import Supervisely pointcloud episodes](https://ecosystem.supervisely.com/apps/import-pointcloud-episode) to your team from Ecosystem.
+1. Find the app in **App Ecosystem** and click **Run Application**.
+2. Drag & drop your project from the local disk, or choose it from team **Files**.
+3. Alternatively, open the context menu on a folder or archive in team **Files** and select `Run app` → `Import` → `Import Point Cloud Episodes`.
 
-<img data-key="sly-module-link" data-module-slug="supervisely-ecosystem/import-pointcloud-episode" src="https://i.imgur.com/JRM9WXO.png" width="450px" style='padding-bottom: 20px'/>  
-
-2. Run app from the context menu of directory or archive in **Team Files** -> `Run app` -> `Import pointcloud episodes in supervisely format`
-
-<img src="https://i.imgur.com/AOhFNgm.png"/>
+<div align="center">
+<img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.2.6/ecosystem.jpg" width="90%"/>
+</div>
 
 # How To Use 
 
-1. Wait for the app to import your data (project will be created in the current workspace)
+Wait for the app to import your data (project will be created in the current workspace)
 
-<img src="https://i.imgur.com/UjcZZgP.png"/>  
+<div align="center">
+<img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.2.6/import.jpg" width="90%"/>
+</div>

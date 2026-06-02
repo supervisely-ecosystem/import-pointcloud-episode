@@ -1,5 +1,5 @@
 {
-  "name": "Import Pointcloud Episodes",
+  "name": "Import Point Cloud Episodes",
   "type": "app",
   "categories": [
     "import",
@@ -10,7 +10,7 @@
     "remove_source": true,
     "project_name": ""
   },
-  "description": "Import Pointcloud Episodes with Annotations and Photo context",
+  "description": "Import Point Cloud Episodes in Supervisely format with Annotations and Photo context",
   "docker_image": "supervisely/base-py-sdk-hardened:6.73.577",
   "main_script": "src/main.py",
   "modal_template": "src/modal.html",

@@ -27,7 +27,7 @@ You can learn more about format and its structure by reading [documentation](htt
 
 Supported point cloud file formats: **`.pcd`**, **`.ply`**, **`.las`**, **`.laz`**.
 
-<video width="100%" src="https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F9mM1dNm0uHlRsfWgJmow%2Fuploads%2FteQmm0BXOeQlFIgUcpa5%2Fpcde-tool-performance.mp4?alt=media&token=198f6ef1-d93e-40bf-8a1b-f9173adc8a67" autoplay loop muted></video>
+<video width="100%" src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.2.6/pcde-tool-performance.mp4" autoplay loop muted></video>
 
 Backward compatible with [`Export Supervisely Point Cloud Episodes`](https://ecosystem.supervisely.com/apps/export-pointcloud-episode) app
 

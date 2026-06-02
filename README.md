@@ -1,5 +1,5 @@
 <div align="center" markdown>
-<img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.0.0/poster.png">
+<img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.2.7/pcde-import-poster.jpg">
 
 # Import Point Cloud Episodes
 
@@ -96,7 +96,7 @@ Imported project structure has to be the following:
 3. Alternatively, open the context menu on a folder or archive in team **Files** and select `Run app` → `Import` → `Import Point Cloud Episodes`.
 
 <div align="center">
-<img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.2.6/ecosystem.jpg" width="90%"/>
+<img src="https://github.com/supervisely-ecosystem/import-pointcloud-episode/releases/download/v1.2.7/ecosystem.jpg" width="90%"/>
 </div>
 
 # How To Use 

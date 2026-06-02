@@ -27,7 +27,7 @@ You can learn more about format and its structure by reading [documentation](htt
 
 Supported point cloud file formats: **`.pcd`**, **`.ply`**, **`.las`**, **`.laz`**.
 
-<video width="100%" src="https://release-assets.githubusercontent.com/github-production-release-asset/424960544/70956804-6ab9-40de-bbed-621171c378ff" autoplay loop muted></video>
+<video width="100%" src="https://private-user-images.githubusercontent.com/57998637/601549978-180d8ca6-0c62-41f9-ba85-f255dd5c5264.mp4?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODA0MDMyNTEsIm5iZiI6MTc4MDQwMjk1MSwicGF0aCI6Ii81Nzk5ODYzNy82MDE1NDk5NzgtMTgwZDhjYTYtMGM2Mi00MWY5LWJhODUtZjI1NWRkNWM1MjY0Lm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA2MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNjAyVDEyMjIzMVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWI1YzRjNmM5YTBhYWMyNjFmYmY0MjA1MzY1YTUzODU0YTllYjFjZWI3ZDUzZDEzZDQ3MzlhZTlmNzUyNGRhMjEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT12aWRlbyUyRm1wNCJ9.KOj1wR78vfQarFcyJG7q0uM39MiUDf3wYQO7XjjBw8s" autoplay loop muted></video>
 
 Backward compatible with [`Export Supervisely Point Cloud Episodes`](https://ecosystem.supervisely.com/apps/export-pointcloud-episode) app
 

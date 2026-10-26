@@ -11,6 +11,12 @@ import workflow as w
 def import_pointcloud_episode(api: sly.Api, task_id):
     sly_sdk_compat.patch_supervisely_sdk_for_py38()
     projects_cnt = 0
+    # The exact Team Files path the user selected (or the app-owned drag-and-drop folder).
+    # check_input_path() may re-point g.INPUT_DIR to a parent folder (up to "/") to find
+    # the project root; that parent must never be removed, only this path.
+    selected_path = g.INPUT_DIR if g.INPUT_DIR else g.INPUT_FILE
+    # Everything that was found but not imported: if not empty, the source is kept.
+    not_imported = []
     project_dirs, only_pcd_dirs = f.download_input_files(api, task_id)
 
     if len(project_dirs) > 0:
@@ -25,7 +31,11 @@ def import_pointcloud_episode(api: sly.Api, task_id):
             )
             sly.logger.info(f"Project name: '{project_name}'")
 
-            f.validate_local_project(input_dir)
+            skipped_related_images = f.validate_local_project(input_dir)
+            if skipped_related_images:
+                not_imported.append(
+                    f"{len(skipped_related_images)} invalid related image(s) skipped in '{project_name}'"
+                )
 
             try:
                 project_id, project_name = upload_pointcloud_episode_project(
@@ -45,6 +55,9 @@ def import_pointcloud_episode(api: sly.Api, task_id):
                 sly.logger.warning(
                     f"Project '{project_name}' was not uploaded correctly. Error: {e}"
                 )
+                not_imported.append(
+                    f"project '{project_name}' failed to upload with annotations ({e})"
+                )
                 only_pcd_dirs.append(input_dir)
 
     if len(only_pcd_dirs) > 0:
@@ -54,12 +67,18 @@ def import_pointcloud_episode(api: sly.Api, task_id):
         sly.logger.info(
             f"Trying to upload only pointclouds to the new project from the directories {only_pcd_dirs}."
         )
-        project_info = f.upload_only_pcd(api, only_pcd_dirs)
+        skipped_pcd_dirs = []
+        project_info = f.upload_only_pcd(api, only_pcd_dirs, skipped_pcd_dirs)
+        if len(skipped_pcd_dirs) > 0:
+            not_imported.append(f"pointcloud directories skipped: {skipped_pcd_dirs}")
         if not project_info:
             msg = "Failed to upload pointclouds to the new project."
             description = "Please, check the logs for details."
             sly.logger.error(msg)
             api.task.set_output_error(task_id, msg, description)
+            _keep_source(selected_path, msg)
+            g.my_app.stop()
+            return
         else:
             w.workflow_output(api, project_info.id)
             projects_cnt += 1
@@ -69,23 +88,46 @@ def import_pointcloud_episode(api: sly.Api, task_id):
         description = "Please, read the app overview."
         sly.logger.error(msg)
         api.task.set_output_error(task_id, msg, description)
+        _keep_source(selected_path, msg)
+        g.my_app.stop()
+        return
     elif projects_cnt == 0:
         msg = "No pointcloud episodes projects were uploaded."
         description = "Read the app overview and check the input data."
         sly.logger.error(msg)
         api.task.set_output_error(task_id, msg, description)
+        _keep_source(selected_path, msg)
+        g.my_app.stop()
+        return
+
     if g.REMOVE_SOURCE and not g.IS_ON_AGENT:
-        if g.INPUT_DIR is not None:
-            path_to_remove = g.INPUT_DIR
+        imported_path = g.INPUT_DIR if g.INPUT_DIR else g.INPUT_FILE
+        if len(not_imported) > 0:
+            _keep_source(
+                selected_path, f"not everything found was imported: {not_imported}"
+            )
+        elif not selected_path:
+            sly.logger.info("Source removal is enabled, but no input path was provided.")
         else:
-            path_to_remove = g.INPUT_FILE
-        api.file.remove(team_id=g.TEAM_ID, path=path_to_remove)
-        source_dir_name = path_to_remove.strip("/")
-        sly.logger.info(
-            msg=f"Source directory: '{source_dir_name}' was successfully removed."
-        )
+            if imported_path != selected_path:
+                sly.logger.info(
+                    f"Data was imported from '{imported_path}' (resolved from the selected "
+                    f"path '{selected_path}'); only the selected path will be removed."
+                )
+            sly.logger.info(f"Removing source from Team Files: '{selected_path}'")
+            api.file.remove(team_id=g.TEAM_ID, path=selected_path)
+            sly.logger.info(
+                msg=f"Source '{selected_path}' was successfully removed from Team Files."
+            )
 
     g.my_app.stop()
+
+
+def _keep_source(selected_path, reason):
+    if g.REMOVE_SOURCE and not g.IS_ON_AGENT:
+        sly.logger.warning(
+            f"Source '{selected_path}' is kept in Team Files and was NOT removed: {reason}"
+        )
 
 
 @sly.handle_exceptions(has_ui=False)

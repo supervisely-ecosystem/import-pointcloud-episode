@@ -193,7 +193,9 @@ def validate_local_project(input_dir):
     """
     Validate local project before uploading to Supervisely.
     # * Validate related images with corresponding JSON annotation files *
+    Returns the list of related image files that failed validation and were skipped.
     """
+    skipped_files = []
     project_locally = sly.PointcloudEpisodeProject.read_single(input_dir)
     for dataset_locally in project_locally.datasets:
         bad_related_images = defaultdict(lambda: defaultdict(list))
@@ -210,6 +212,7 @@ def validate_local_project(input_dir):
                         bad_related_images[g.RELATED_IMAGES_ANN_NOT_FOUND][name].append(
                             file_name
                         )
+                        skipped_files.append(file)
                         sly.fs.silent_remove(file)
                         continue
                     img_meta = sly.json.load_json_file(img_meta_path)
@@ -221,18 +224,21 @@ def validate_local_project(input_dir):
                             ][name].append(file)
                             need_required_field = True
                     if need_required_field:
+                        skipped_files.append(file)
                         sly.fs.silent_remove(file)
                         continue
                     if img_meta[ApiField.NAME] != sly.fs.get_file_name_with_ext(file):
                         bad_related_images[g.RELATED_IMAGES_ANN_WRONG_NAME][
                             name
                         ].append(file_name)
+                        skipped_files.append(file)
                         sly.fs.silent_remove(file)
                         continue
                     if not isinstance(img_meta[ApiField.META], dict):
                         bad_related_images[g.RELATED_IMAGES_ANN_META_TYPE][name].append(
                             file_name
                         )
+                        skipped_files.append(file)
                         sly.fs.silent_remove(file)
                         continue
                     if (
@@ -242,12 +248,14 @@ def validate_local_project(input_dir):
                         bad_related_images[g.SENSOR_DATA_NOT_FOUND][name].append(
                             file_name
                         )
+                        skipped_files.append(file)
                         sly.fs.silent_remove(file)
                         continue
                     if not isinstance(
                         img_meta[ApiField.META][g.RELATED_IMAGES_SENSOR_DATA], dict
                     ):
                         bad_related_images[g.SENSOR_DATA_TYPE][name].append(file_name)
+                        skipped_files.append(file)
                         sly.fs.silent_remove(file)
                         continue
                     bad_sensor_data_field = False
@@ -290,6 +298,7 @@ def validate_local_project(input_dir):
                             ][name].append(file_name)
                             bad_sensor_data_field = True
                     if bad_sensor_data_field:
+                        skipped_files.append(file)
                         sly.fs.silent_remove(file)
                         continue
         if len(bad_related_images) > 0:
@@ -299,9 +308,14 @@ def validate_local_project(input_dir):
             for error, items in bad_related_images.items():
                 sly.logger.warn(f"    - {error} for items: {list(items.values())}")
             sly.logger.warn("All related images with errors will be skipped.")
+    return skipped_files
 
 
-def upload_only_pcd(api: sly.Api, input_dirs):
+def upload_only_pcd(api: sly.Api, input_dirs, skipped_dirs=None):
+    """Uploads pointclouds only (no annotations). Directories that were not uploaded
+    are appended to `skipped_dirs` (if given) so the caller can keep the source."""
+    if skipped_dirs is None:
+        skipped_dirs = []
     project = api.project.create(
         g.WORKSPACE_ID,
         "Pointclouds",
@@ -311,6 +325,7 @@ def upload_only_pcd(api: sly.Api, input_dirs):
     pcd_cnt = 0
     for input_dir in input_dirs:
         if not sly.fs.dir_exists(input_dir):
+            skipped_dirs.append(input_dir)
             continue
         pcd_paths = sly.fs.list_files(
             input_dir,
@@ -320,6 +335,7 @@ def upload_only_pcd(api: sly.Api, input_dirs):
         # sort by names:
         pcd_paths = sorted(pcd_paths)
         if len(pcd_paths) == 0:
+            skipped_dirs.append(input_dir)
             continue
         dataset_name = os.path.basename(os.path.normpath(input_dir))
         dataset = api.dataset.create(
@@ -332,6 +348,7 @@ def upload_only_pcd(api: sly.Api, input_dirs):
         ]
         if len(pcd_names) != len(pcd_paths):
             sly.logger.warn("Not all files have valid pointcloud extensions.")
+            skipped_dirs.append(input_dir)
             continue
         metas = [{"frame": i} for i in range(len(pcd_paths))]
         progress_cb = sly.Progress(
